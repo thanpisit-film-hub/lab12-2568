@@ -9,6 +9,7 @@ import {
   Group,
   Checkbox,
   ActionIcon,
+  useMantineColorScheme
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { LoremIpsum } from "lorem-ipsum";
@@ -106,37 +107,32 @@ export default function HomePage() {
                   <Text size="sm" c="dimmed">
                     {task.description}
                   </Text>
+                  
+                  {/* แสดง Date & Time ------------------------------------------------------------------------------------------------------*/}
                   {task.dueDate && (
                     <Text size="xs" c="gray">
                       Due: {task.dueDate.toLocaleDateString()}
+                  </Text>
+                  )}
+                  
+                  {task.dueDate && task.isDone &&(
+                    <Text size="sm" c="Thanpisit">
+                      Done at: {task.dueDate.toLocaleString()}
                     </Text>
                   )}
-                  {/* แสดง Date & Time */}
-                  <Text size="xs" c="gray">
-                    Done at:
-                  </Text>
+                  
                 </Stack>
                 {/* แสดง Button Done & Button Delete */}
                 <Group>
-                  <Button
-                    style={{
-                      backgroundColor: "#71c32fda",
-                      color: "#dce6e7ff",
-                    }}
-                    variant="light"
-                    size="xs"
-                    onClick={() => toggleDoneTask(task.id)}
-                  >
-                    Done
-                  </Button>
-                  <Button
-                    color="chanadda"
-                    variant="light"
-                    size="xs"
-                    onClick={() => deleteTask(task.id)}
-                  >
-                    Delete
-                  </Button>
+                    <Checkbox
+                        checked={task.isDone}
+                        onChange={() => toggleDoneTask(task.id)}
+                        label="Done"
+                    />
+                  <ActionIcon variant="filled" color="red" size="sm" aria-label="Settings" onClick={() => deleteTask(task.id)}>
+                    <IconTrash style={{ width: '70%', height: '70%' }} stroke={1.5} />
+                  </ActionIcon>
+
                 </Group>
               </Group>
             </Card>
